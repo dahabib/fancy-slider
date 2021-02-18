@@ -14,7 +14,7 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
-  if (images.length != 0){
+  if (images.length != 0) {
     imagesArea.style.display = 'block';
     gallery.innerHTML = '';
     // show gallery title
@@ -24,7 +24,7 @@ const showImages = (images) => {
       div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
       div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
       gallery.appendChild(div)
-    })
+    });
     toggleSpinner();
   }
   else {
@@ -33,6 +33,7 @@ const showImages = (images) => {
 }
 
 const getImages = (query) => {
+  document.querySelector('.counter-div').style.display = 'none';
   toggleSpinner();
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
@@ -43,11 +44,11 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  
+
   element.classList.toggle('added');
-  
+
   let item = sliders.indexOf(img);
-  
+
   if (item === -1) {
     sliders.push(img);
   } else {
@@ -80,7 +81,7 @@ const createSlider = () => {
   gallery.innerHTML = '';
 
   let duration = document.getElementById('duration').value || 1000;
-  if (duration < 0){
+  if (duration < 0) {
     duration = 1000;
   }
   sliders.forEach(slide => {
@@ -137,7 +138,7 @@ searchBtn.addEventListener('click', function () {
 search.addEventListener("keypress", function (event) {
   document.querySelector('.main').style.display = 'none';
   document.querySelector('.warning-message').innerHTML = '';
-  if (event.key === 'Enter'){
+  if (event.key === 'Enter') {
     getImages(search.value);
     search.value = '';
   };
@@ -153,16 +154,16 @@ const toggleSpinner = () => {
 }
 
 const displayError = errorType => {
-    // hide image area
+  // hide image area
   imagesArea.style.display = 'none';
   // show warning if something happens wrong
   const messageDiv = document.querySelector('.warning-message');
   const messagePara = document.createElement('p');
   messagePara.classList.add('text-center', 'text-danger');
   if (errorType === 0) {
-    const message = messagePara.innerText = 'No Photo Found, Please search with proper name';  
+    const message = messagePara.innerText = 'No Photo Found, Please search with proper name';
   }
-  else{
+  else {
     const message = messagePara.innerText = 'Something went wrong, please try again!!';
   }
   messageDiv.appendChild(messagePara);
@@ -181,7 +182,7 @@ const displayCount = () => {
     counterDiv.style.display = 'block';
     counterDiv.innerHTML = `<h5>Selected images : <span class="badge bg-secondary text-white">${sliders.length}</span></h5>`;
   }
-  else{
+  else {
     counterDiv.innerHTML = `<h5>Select at least 2 images to have a fency slider</h5>`;
   }
 }
