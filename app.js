@@ -7,7 +7,6 @@ const sliderContainer = document.getElementById('sliders');
 // selected image 
 let sliders = [];
 
-
 // If this key doesn't work
 // Find the name in the url and go to their website
 // to create your own api key
@@ -54,6 +53,7 @@ const selectItem = (event, img) => {
   } else {
     sliders.splice(item, 1);
   }
+  displayCount();
 }
 
 var timer
@@ -89,7 +89,7 @@ const createSlider = () => {
     item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
-    sliderContainer.appendChild(item)
+    sliderContainer.appendChild(item);
   })
   changeSlide(0)
   timer = setInterval(function () {
@@ -168,4 +168,20 @@ const displayError = errorType => {
   messageDiv.appendChild(messagePara);
   document.querySelector('.gallery').innerHTML = '';
   toggleSpinner();
+}
+
+// Selected image counter
+
+const counterDiv = document.querySelector('.counter-div');
+counterDiv.style.display = 'none';
+
+const displayCount = () => {
+  console.log(sliders.length);
+  if (sliders.length != 0) {
+    counterDiv.style.display = 'block';
+    counterDiv.innerHTML = `<h5>Selected images : <span class="badge bg-secondary text-white">${sliders.length}</span></h5>`;
+  }
+  else{
+    counterDiv.innerHTML = `<h5>Select at least 2 images to have a fency slider</h5>`;
+  }
 }
